@@ -1,14 +1,9 @@
+import 'episode.dart';
+
 import 'location.dart';
 
 class Character2Model {
-  /*
-  id	1
-name	"Rick Sanchez"
-status	"Alive"
-species	"Human"
-type	""
-gender	"Male"
-  * */
+
 
   int? id;
   String? name;
@@ -17,7 +12,8 @@ gender	"Male"
   String? type;
   String? image;
   String? location;
-  //String? episode;
+  List<String>? episode;
+  EpisodeModel? episodeModel;
 
 
   Character2Model({
@@ -25,10 +21,11 @@ gender	"Male"
     this.name,
     this.status,
     this.species,
-    this.type,
     this.image,
+    this.type,
     this.location,
-    //this.episode,
+    this.episode,
+    this.episodeModel,
   });
 
   factory Character2Model.fromJson(Map<String, dynamic> json){
@@ -37,16 +34,16 @@ gender	"Male"
       name: json["name"],
       status: json["status"],
       species: json["species"],
-      type: json["type"],
       image: json["image"],
-      location: LocationModel.fromJson(json["location"]).toString(),
-      //episode:
+      type: json["type"],
+      location: LocationModel.fromJson(json["location"]).name.toString(),
+      episode:(json["episode"] as List).map((e) => e as String).toList(),
     );
   }
 
   @override
   String toString() {
-    return "id: ${ this.id}," "name ${this.name}" "status: ${this.status}";
+    return "id: ${ this.id}" "name ${this.name}" "status: ${this.status}" "species: ${this.status}" "image: ${this.image}" "type: ${this.type}" "location: ${this.location}" "episode: ${this.episode}";
   }
 }
 

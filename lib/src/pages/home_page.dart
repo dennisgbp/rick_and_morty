@@ -8,12 +8,15 @@ import 'package:rickandmorty/src/widgets/column_final.dart';
 class MyApp extends StatelessWidget {
   MyController _controller =  MyController();
 
+  //MyApp({Key? key}) : super(key: key);
+
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
+    return GetMaterialApp(
       debugShowCheckedModeBanner: false,
       home: Center(
         child: Scaffold(
+          backgroundColor: const Color(0xFFB3b3e40),
           appBar: AppBar(
             backgroundColor: Colors.white,
             actions: <Widget>[
@@ -66,79 +69,43 @@ class MyApp extends StatelessWidget {
               ),
             ],
           ),
-          body: GetBuilder<MyController>(
-            init: _controller,
-            builder: (context) {
-              return SingleChildScrollView(
-                child: Container(
-                  color: Color(0xFFB3b3e40),
-                  child: Column(
+          body:  SafeArea(
+
+            child: SingleChildScrollView(
+              child: Column(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
                       //httpCharacter(),
                       _rick1(),
                       SizedBox(height: 5.0),
-                      CardCharacter(
-                        image:
-                            'https://raw.githubusercontent.com/Adalab/rick-y-morty/master/assets/img/11.jpeg',
-                        name: '  Albert Einstein',
-                        location: '  Earth (Replacement Dimension)',
-                        type: '  Dead - Human',
-                        episode: '  A Rickle in Time',
-                        lifetime: false,
-                      ),
-                      CardCharacter(
-                        image:
-                        'https://static.wikia.nocookie.net/rickandmorty/images/b/b4/Evil_Summer_Clone.png/revision/latest?cb=20160923152120',
-                        name: '  Evil Summer Clone',
-                        location: '  Earth (C-137)',
-                        type: '  Dead - Human',
-                        episode: '  Meeseeks and Destroy',
-                        lifetime: false,
-                      ),
-                      CardCharacter(
-                        image:
-                        'https://rickandmortyapi.com/api/character/avatar/123.jpeg',
-                        name: '  Fat Morty',
-                        type: '  Alive - Human',
-                        location: '  Citadel of Ricks',
-                        episode: '  The Ricklantis Mixup',
-                        lifetime: true,
-                      ),
-                      CardCharacter(
-                        image:
-                        'https://rickandmortyapi.com/api/character/avatar/221.jpeg',
-                        name: '  Melissa',
-                        type: '  Alive - Mythological Creature',
-                        location: '  Mr. Goldenfolds dream',
-                        episode: '  Lawnmover Dog',
-                        lifetime: true,
-                      ),
-                      CardCharacter(
-                        image:
-                        'https://rickandmortyapi.com/api/character/avatar/578.jpeg',
-                        name: '  Snake Soldier',
-                        type: '  Alive - Animal',
-                        location: '  Snake Planet',
-                        episode: '  Rattlestar Ricklactica',
-                        lifetime: true,
-                      ),
-                      CardCharacter(
-                        image:
-                        'https://rickandmortyapi.com/api/character/avatar/688.jpeg',
-                        name: '  Scarecrow Summer',
-                        type: '  Dead - Robot',
-                        location: '  Earth (Replacement Dimension',
-                        episode: '  Mortyplicity',
-                        lifetime: false,
+                      SizedBox(
+                        height: 500,
+                        child: GetBuilder<MyController>(
+                          init: _controller,
+                          builder: (_) {
+                            if(_.isLoad.value)return Center(
+                              child: CircularProgressIndicator(),
+                            );
+                            return ListView.builder(
+                              //scrollDirection: Axis.vertical,
+                             // shrinkWrap: true,
+                              padding: EdgeInsets.all(20),
+                              itemCount: _.characterList?.length,
+                              itemBuilder: ( context,  i) {
+                                  return CardCharacter(
+                                    person: _.characterList?[i],
+                                  );
+                                },
+                            );
+                          }
+                        ),
                       ),
                       FinalApi(),
                     ],
                   ),
-                ),
-              );
-            }
+            ),
           ),
+
         ),
       ),
     );
