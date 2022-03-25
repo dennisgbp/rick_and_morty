@@ -1,6 +1,7 @@
 import 'dart:developer';
 import 'package:dio/dio.dart';
 import 'package:rickandmorty/src/models/character2.dart';
+import 'package:rickandmorty/src/models/detail_character.dart';
 import 'package:rickandmorty/src/models/episode.dart';
 
 class CharacterHttp {
@@ -15,7 +16,6 @@ class CharacterHttp {
         .map((e) => Character2Model.fromJson(e))
         .toList();
     //log("$data", name: "DATA DEL SERVIDOR");
-    //final ruta = data.
     return data;
   }
 
@@ -23,4 +23,15 @@ class CharacterHttp {
     final res = await dio.get(route);
     return EpisodeModel.fromJson(res.data);
   }
+
+  // Future<CharacterDetailModel> getDetailCharacter(String route) async {
+  //   final res = await dio.get(route);
+  //   return CharacterDetailModel.fromJson(res.data);
+  // }
+
+Future<CharacterDetailModel>getDetailCharacter(int id)async{
+    final res = await dio.get("/api/character/$id");
+    return CharacterDetailModel.fromJson(res.data);
+}
+
 }

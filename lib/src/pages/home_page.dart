@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:rickandmorty/src/controllers/character_controller.dart';
+import 'package:rickandmorty/src/pages/character_page.dart';
 import 'package:rickandmorty/src/widgets/card_character.dart';
 import 'package:rickandmorty/src/widgets/column_final.dart';
 
@@ -87,20 +88,28 @@ class MyApp extends StatelessWidget {
                               child: CircularProgressIndicator(),
                             );
                             return ListView.builder(
-                              //scrollDirection: Axis.vertical,
-                             // shrinkWrap: true,
                               padding: EdgeInsets.all(20),
                               itemCount: _.characterList?.length,
                               itemBuilder: ( context,  i) {
-                                  return CardCharacter(
-                                    person: _.characterList?[i],
+                                  return InkWell(
+                                    child: CardCharacter(
+                                      person: _.characterList?[i],
+                                    ),
+                                    onTap:(){
+                                      Get.to( ()=>CharacterPage(
+                                        id: _.characterList?[i].id,
+                                      ));
+                                      print('${_.characterList?[i].id}');
+                                    }
                                   );
                                 },
+
                             );
                           }
                         ),
                       ),
                       FinalApi(),
+
                     ],
                   ),
             ),

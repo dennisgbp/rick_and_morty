@@ -1,10 +1,12 @@
+import 'character_origin.dart';
+
 class CharacterDetailModel {
   int? id;
   String? name;
   String? status;
   String? species;
   String? gender;
-  String? origin;
+  CharacterOriginModel ? origin;
   String? image;
 
 
@@ -25,7 +27,7 @@ class CharacterDetailModel {
       status: json["status"],
       species: json["species"],
       gender: json["gender"],
-      origin: CharacterDetailModel.fromJson(json["origin"]).toString(),
+      origin:json.containsKey("origin") && json["origin"] != null ? CharacterOriginModel.fromJson(json["origin"]): null,
       image: json["image"],
     );
   }
